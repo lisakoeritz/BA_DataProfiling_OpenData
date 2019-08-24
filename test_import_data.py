@@ -37,10 +37,9 @@ def test_get_dataset_fsp(test_data):
     with pytest.raises(RuntimeWarning):
         ip.get_dataset_fsp("http://www.foodsecurityportal.org/api/countries/percent-below-.csv")
 
-#def test_get_dataset_wb(test_data):
-#   output = ip.get_dataset_wb('SI.POV.NAHC')
-
 def test_get_metatdata_wb():
     test_meta_att = ip.get_metadata_attributes_wb('SI.POV.NAH') #non-existent indicator
     empty_metadata = {'Beschreibung':'N/A', 'Dateneinheit':'N/A', 'Erstellungsdatum':'N/A', 'Herausgeber':'N/A', 'ID':'N/A', 'Kategorie':'N/A', 'Quelle':'N/A', 'Titel':'N/A'}
     assert test_meta_att == empty_metadata
+
+

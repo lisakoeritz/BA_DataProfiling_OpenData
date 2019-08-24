@@ -83,33 +83,34 @@ def get_metadata_attributes_fsp(url) -> dict:
         A dict with filled metadata
     """
     metadata_dict = dict.fromkeys(metadata_list, 'N/A')
-    try:
-        html = urllib.request.urlopen(url).read()
-        soup = BeautifulSoup(html, 'lxml')
-        title = soup.find('h6', attrs={'class': 'page-title'}).getText()
-        metadata_dict["Titel"] = title
-        for information in soup.find_all('div', attrs={'class': 'field-type-text'}):
-            label = information.find('div', attrs={'class': 'field-label'}).getText().strip(":\xa0")
-            attribute = information.find('div', attrs={'class': 'field-item'}).getText().strip()
-            #if "Temporal Info" in label:
-            #   metadata_dict["zeitl. Abdeckung"] = attribute
-            if "Unit" in label:
-                metadata_dict["Dateneinheit"] = attribute
-            elif "Source" in label:
-                metadata_dict["Herausgeber"] = [str(s) for s in str.split(attribute) if s.isalpha()][0]
-                metadata_dict["Erstellungsdatum"] = [int(s) for s in str.split(attribute) if s.isnumeric()][0]
-            elif "Footnote" in label:
-                metadata_dict["Quelle"] = attribute
-            #else:
-            #    metadata_dict[label] = attribute
-        description = soup.find('div', attrs={'class': 'filter-text'}).get_text().strip("\n")
-        metadata_dict["Beschreibung"] = description
-    except KeyError:
-        pass
-    except TypeError:
-        logging.warning("URL Parameter ist notwendig")
-    except AttributeError:
-        logging.info("URL existiert nicht in API")
+    if not "N/A" in url:
+        try:
+            html = urllib.request.urlopen(url).read()
+            soup = BeautifulSoup(html, 'lxml')
+            title = soup.find('h6', attrs={'class': 'page-title'}).getText()
+            metadata_dict["Titel"] = title
+            for information in soup.find_all('div', attrs={'class': 'field-type-text'}):
+                label = information.find('div', attrs={'class': 'field-label'}).getText().strip(":\xa0")
+                attribute = information.find('div', attrs={'class': 'field-item'}).getText().strip()
+                #if "Temporal Info" in label:
+                #   metadata_dict["zeitl. Abdeckung"] = attribute
+                if "Unit" in label:
+                    metadata_dict["Dateneinheit"] = attribute
+                elif "Source" in label:
+                    metadata_dict["Herausgeber"] = [str(s) for s in str.split(attribute) if s.isalpha()][0]
+                    metadata_dict["Erstellungsdatum"] = [int(s) for s in str.split(attribute) if s.isnumeric()][0]
+                elif "Footnote" in label:
+                    metadata_dict["Quelle"] = attribute
+                #else:
+                #    metadata_dict[label] = attribute
+            description = soup.find('div', attrs={'class': 'filter-text'}).get_text().strip("\n")
+            metadata_dict["Beschreibung"] = description
+        except (urllib.error.HTTPError, KeyError):
+            pass
+        except TypeError:
+            logging.info("URL Parameter ist notwendig")
+        except AttributeError:
+            logging.info("URL existiert nicht in API")
     return metadata_dict
 
 
