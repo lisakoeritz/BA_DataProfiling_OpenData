@@ -1,6 +1,6 @@
 # Bachelorarbeit "Untersuchung von Möglichkeiten zur Datenprofilierung von Open Data im Kontext von Ernährungssicherheit"
 
-Interaktives Jupyter Notebook (voilà Dashboard) als prototypische Implementierung analysierter Data Profiling Möglichkeiten zur Unterstützung der Evaluation von Nützlichkeit und Qualität der in Food Security Portal (foodescurityportal.org/api) enthaltenen Datensätze. 
+Interaktives Jupyter Notebook (voilà Dashboard) als prototypische Implementierung analysierter Data Profiling Möglichkeiten zur Unterstützung der Evaluation von Nützlichkeit und Qualität der in Food Security Portal (http://www.foodsecurityportal.org/api) enthaltenen Datensätze. 
 
 ### Installationsanleitung
 
